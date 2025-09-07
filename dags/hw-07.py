@@ -14,7 +14,7 @@ SILVER = 'Silver'
 BRONZE = 'Bronze'
 
 default_args = {
-    'start_date': datetime(2020, 0, 0, 0, 0),
+    'start_date': datetime(2020, 1, 0, 0, 0),
 }
 
 CONNECTION = "goit_mysql_db_amaslianko"
