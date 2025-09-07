@@ -70,7 +70,7 @@ with DAG(
 
     delay = PythonOperator(
         task_id='delay',
-        python_callable=lambda: time.sleep(dag.params['delay']),
+        python_callable=lambda **context: time.sleep(context['params']['delay']),
         trigger_rule=tr.ONE_SUCCESS
     )
 
