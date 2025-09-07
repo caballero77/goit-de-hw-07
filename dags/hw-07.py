@@ -23,7 +23,7 @@ def create_calculation_operator(type: str) -> MySqlOperator:
         task_id=f'calc_{type}',
         mysql_conn_id=CONNECTION,
         sql=f"""
-            INSERT INTO {TABLE} (type, count, created_at)
+            INSERT INTO {TABLE} (medal_type, count, created_at)
             SELECT '{type}', COUNT(*), NOW()
             FROM olympic_dataset.athlete_event_results 
             WHERE medal = '{type}';
@@ -47,7 +47,7 @@ with DAG(
         sql=f"""
             CREATE TABLE IF NOT EXISTS {TABLE} (
                     id         int auto_increment primary key,
-                    type text      null,
+                    medal_type text      null,
                     count      int       null,
                     created_at timestamp null
                 );
