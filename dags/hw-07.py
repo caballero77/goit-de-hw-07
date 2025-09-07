@@ -1,5 +1,5 @@
 
-from airflow import DAG
+from airflow import DAG, Param
 from datetime import datetime
 from airflow.sensors.sql import SqlSensor
 from airflow.operators.mysql_operator import MySqlOperator
@@ -12,10 +12,6 @@ import time
 GOLD = 'Gold'
 SILVER = 'Silver'
 BRONZE = 'Bronze'
-
-default_args = {
-    'start_date': datetime(2020, 1, 1, 0, 0),
-}
 
 CONNECTION = "goit_mysql_db_amaslianko"
 TABLE = "olympic_dataset.amaslianko_medals"
@@ -34,7 +30,12 @@ def create_calculation_operator(type: str) -> MySqlOperator:
 
 with DAG(
         'hw-07',
-        default_args=default_args,
+        default_args={
+            'start_date': datetime(2020, 1, 1, 0, 0),
+        },
+        params={
+            "delay": Param(5, type="integer", minimum=0, title="Delay in seconds", description="Delay before validation")
+        },
         schedule_interval=None,  #
         catchup=False,
 ) as dag:
@@ -67,7 +68,7 @@ with DAG(
 
     delay = PythonOperator(
         task_id='delay',
-        python_callable=lambda: time.sleep(5),
+        python_callable=lambda: time.sleep(dag.params['delay']),
         trigger_rule=tr.ONE_SUCCESS
     )
 
