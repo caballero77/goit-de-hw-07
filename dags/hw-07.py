@@ -1,11 +1,13 @@
 
-from airflow import DAG, Param
+from airflow import DAG
 from datetime import datetime
 from airflow.sensors.sql import SqlSensor
 from airflow.operators.mysql_operator import MySqlOperator
 from airflow.operators.python import PythonOperator, BranchPythonOperator
 from airflow.utils.trigger_rule import TriggerRule as tr
 from airflow.utils.state import State
+from airflow.models.param import Param
+
 import random
 import time
 
